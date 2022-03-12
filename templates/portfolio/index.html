@@ -5,12 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-    {% if portfolio_list %}
+    {% if picture_list %}
         <ul>
-            {% for portfolio in portfolio_list %}
-                <br>
-                    <a href="{% url 'portfolio:detail' portfolio.id %}"> {{ portfolio.title }} </a>
-                </br>
+            {% for picture in picture_list %}
+                {{ picture }}
+                <div style="text-align:center">
+                    <img src="{{picture.portfolio.cover_picture.url}}" alt="" height="300rem" width="200rem">
+                    <br>
+                        <a href="{% url 'portfolio:detail' picture.portfolio.id %}"> {{ picture.portfolio.title }} </a>
+                    </br>
+                </div>
             {% endfor %}
         </ul>
     {% else %}
