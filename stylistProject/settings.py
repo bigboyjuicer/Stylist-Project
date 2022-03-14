@@ -31,11 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'services.apps.ServicesConfig',
-    'orders.apps.OrdersConfig',
-    'reviews.apps.ReviewsConfig',
-    'users.apps.UsersConfig',
-    'portfolio.apps.PortfolioConfig',
+    'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stylistProject.wsgi.application'
+#WSGI_APPLICATION = 'stylistProject.wsgi.application'
 
 
 # Database
@@ -110,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
