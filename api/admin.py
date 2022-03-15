@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Collection, Picture
+
+from .models import Collection, Picture, CustomUser, Service, Review, Order
 
 
 class CollectionAdmin(admin.ModelAdmin):
@@ -24,5 +25,25 @@ class PictureAdmin(admin.ModelAdmin):
     image_preview.allow_tags = True
 
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'is_staff', 'start_date')
+
+
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'price')
+
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('user', 'created')
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('user', 'service', 'is_accepted', 'is_completed', 'created')
+
+
 admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Picture, PictureAdmin)
+admin.site.register(CustomUser, UserAdmin)
+admin.site.register(Service, ServiceAdmin)
+admin.site.register(Review, ReviewAdmin)
+admin.site.register(Order, OrderAdmin)

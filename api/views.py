@@ -1,43 +1,84 @@
-from django.forms import model_to_dict
 from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, IsAuthenticated
 
-from .models import Collection, Picture
+from .models import Collection, Picture, CustomUser, Service, Review, Order
 from .permissions import IsAdminOrReadOnly
-from .serializers import CollectionSerializer, PictureSerializer
+from .serializers import CollectionSerializer, PictureSerializer, UserSerializer, ServiceSerializer, ReviewSerializer, \
+    OrderSerializer
 
 
-class PortfolioAPIView(generics.ListCreateAPIView):
+class PortfolioAPIList(generics.ListCreateAPIView):
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
+
+class PortfolioAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
     permission_classes = (IsAdminOrReadOnly,)
 
 
-class PortfolioDetailAPIView(APIView):
+class PortfolioPicturesAPIList(generics.ListCreateAPIView):
+    serializer_class = PictureSerializer
     permission_classes = (IsAdminOrReadOnly,)
 
-    def get(self, request, pk):
-        collection = Collection.objects.get(pk=pk)
-        pictures = Picture.objects.filter(collection=pk)
-        return Response({'collection': CollectionSerializer(collection).data,
-                         'pictures': PictureSerializer(pictures, many=True).data})
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Picture.objects.filter(collection=pk)
 
-    def post(self, request, pk):
-        request.data['collection'] = pk
-        serializer = PictureSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
 
-        return Response({'picture': serializer.data})
+class PictureAPIList(generics.ListCreateAPIView):
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
-    def delete(self, request, *args, **kwargs):
-        pk = request.data['pk']
-        print(pk)
-        if not pk:
-            return Response({'error': 'Method DELETE not allowed'})
 
-        picture = Picture.objects.get(pk=pk)
-        picture.delete()
+class PictureAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
-        return Response({"picture": "Deleted picture " + str(pk)})
+
+class UserAPIList(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAdminUser,)
+
+
+class ServiceAPIList(generics.ListCreateAPIView):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = (IsAdminOrReadOnly,)
+
+
+class ServiceAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = (IsAdminOrReadOnly,)
+
+
+class ReviewAPIList(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class ReviewAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = (IsAdminOrReadOnly,)
+
+
+class OrderAPIList(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class OrderAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = (IsAdminOrReadOnly,)

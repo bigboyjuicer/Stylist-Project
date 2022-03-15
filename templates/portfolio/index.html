@@ -12,7 +12,7 @@
                 <div style="text-align:center">
                     <img src="{{collection.title}}" alt="" height="300rem" width="200rem">
                     <br>
-                        <a href="{% url 'portfolio:detail' collection.id %}"> {{ picture.portfolio.title }} </a>
+                        <a href="{% url 'api:detail' collection.id %}"> {{ picture.portfolio.title }} </a>
                     </br>
                 </div>
             {% endfor %}
