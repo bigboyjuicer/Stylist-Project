@@ -4,6 +4,7 @@ from .models import Collection, Picture
 
 class CollectionAdmin(admin.ModelAdmin):
     list_display = ('image_preview', 'title', 'created')
+    readonly_fields = ('image_preview',)
 
     def image_preview(self, obj):
         return obj.image_preview

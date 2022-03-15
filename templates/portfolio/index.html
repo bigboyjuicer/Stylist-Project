@@ -5,14 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-    {% if picture_list %}
+    {% if collections %}
         <ul>
-            {% for picture in picture_list %}
-                {{ picture }}
+            {% for collection in collections %}
+                {{ collection }}
                 <div style="text-align:center">
-                    <img src="{{picture.portfolio.cover_picture.url}}" alt="" height="300rem" width="200rem">
+                    <img src="{{collection.title}}" alt="" height="300rem" width="200rem">
                     <br>
-                        <a href="{% url 'portfolio:detail' picture.portfolio.id %}"> {{ picture.portfolio.title }} </a>
+                        <a href="{% url 'portfolio:detail' collection.id %}"> {{ picture.portfolio.title }} </a>
                     </br>
                 </div>
             {% endfor %}

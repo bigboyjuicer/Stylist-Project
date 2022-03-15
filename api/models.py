@@ -42,7 +42,6 @@ class Picture(models.Model):
             f'<img style="display: block; max-width: 230px; max-height: 80px; width: auto, height: auto;" src="{self.image.url}">')
 
 
-
 @receiver(models.signals.post_delete, sender=Collection)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.cover_picture:
