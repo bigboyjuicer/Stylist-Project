@@ -11,44 +11,39 @@ from django.utils import timezone
 
 class CustomAccountManager(BaseUserManager):
 
-    def create_superuser(self, email, password, **other_fields):
-        other_fields.setdefault('is_staff', True)
-        other_fields.setdefault('is_superuser', True)
-        other_fields.setdefault('is_active', True)
-
-        if other_fields.get('is_staff') is not True:
-            raise ValueError(
-                'Superuser must be assigned to is_staff=True')
-        if other_fields.get('is_superuser') is not True:
-            raise ValueError(
-                'Superuser must be assigned to is_superuser=True')
-
-        return self.create_user(email, password, **other_fields)
-
-    def create_user(self, email, password, **other_fields):
+    def _create_user(self, email, password, is_active, is_staff, is_superuser, **extra_fields):
         if not email:
             raise ValueError(_('You must provide an email address'))
-
         email = self.normalize_email(email)
-        user = self.model(email=email, **other_fields)
+        user = self.model(email=email, is_active=is_active, is_staff=is_staff, is_superuser=is_superuser,
+                          **extra_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email, password, **extra_fields):
+        return self._create_user(email, password, is_active=True, is_staff=False, is_superuser=False, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        user = self._create_user(email, password, is_active=True, is_staff=True, is_superuser=True, **extra_fields)
+        user.save(using=self._db)
         return user
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField('Почта', unique=True)
-    first_name = models.CharField('Имя', max_length=15, blank=True)
-    start_date = models.DateTimeField('Дата регистрации', auto_now_add=True)
+    first_name = models.CharField('Имя', max_length=15, blank=True, null=True)
+    date_joined = models.DateTimeField('Дата регистрации', auto_now_add=True)
     is_staff = models.BooleanField('Администратор', default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField('Активен', default=True)
+    is_superuser = models.BooleanField('Суперадмин', default=False)
 
     objects = CustomAccountManager()
 
     USERNAME_FIELD = 'email'
 
     class Meta:
-        ordering = ['-start_date']
+        ordering = ['-date_joined']
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
@@ -65,6 +60,9 @@ class Collection(models.Model):
         ordering = ['-created']
         verbose_name = 'Коллекция'
         verbose_name_plural = 'Коллекции'
+
+    def get_cover_picture(self):
+        return 'http://127.0.0.1:8000' + self.cover_picture.url
 
     @property
     def image_preview(self):

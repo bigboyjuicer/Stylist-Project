@@ -26,7 +26,7 @@ class PictureAdmin(admin.ModelAdmin):
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'is_staff', 'start_date')
+    list_display = ('email', 'is_staff', 'date_joined')
 
 
 class ServiceAdmin(admin.ModelAdmin):
