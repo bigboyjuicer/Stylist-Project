@@ -61,9 +61,6 @@ class Collection(models.Model):
         verbose_name = 'Коллекция'
         verbose_name_plural = 'Коллекции'
 
-    def get_cover_picture(self):
-        return 'http://127.0.0.1:8000' + self.cover_picture.url
-
     @property
     def image_preview(self):
         return mark_safe(

@@ -6,7 +6,7 @@ from .models import Collection, Picture, CustomUser, Service, Review, Order
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
-        fields = ('id', 'title', 'get_cover_picture', 'created')
+        fields = ('id', 'title', 'cover_picture', 'created')
 
 
 class PictureSerializer(serializers.ModelSerializer):

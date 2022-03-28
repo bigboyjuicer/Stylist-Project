@@ -1,8 +1,6 @@
-from rest_framework import generics, status
+from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .models import Collection, Picture, CustomUser, Service, Review, Order
 from .permissions import IsAdminOrReadOnly
@@ -10,16 +8,10 @@ from .serializers import CollectionSerializer, PictureSerializer, UserSerializer
     OrderSerializer
 
 
-class PortfolioAPIList(APIView):
-    def get(self, request):
-        collections = Collection.objects.all()
-        serializer = CollectionSerializer(collections, many=True)
-        return Response(serializer.data)
-
-#class PortfolioAPIList(generics.ListCreateAPIView):
-    #queryset = Collection.objects.all()
-    #serializer_class = CollectionSerializer
-    # = (IsAdminOrReadOnly,)
+class PortfolioAPIList(generics.ListCreateAPIView):
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
+    permission_classes = (IsAdminOrReadOnly,)
     # authentication_classes = (TokenAuthentication,)
 
 
