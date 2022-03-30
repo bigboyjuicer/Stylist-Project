@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <a href="/portfolio">
+    <router-link to="/portfolio">
       <div class="blur">
         <div class="title">
           <div class="stylist">Стилист</div>
@@ -8,7 +8,7 @@
           <div class="annotation">Тут говорят о женственности</div>
         </div>
       </div>
-    </a>
+    </router-link>
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
 }
 
 .blur {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
   width: 100%;
   height: 100%;
@@ -87,4 +87,6 @@ export default {
   font-size: 36px;
   padding-left: 52%;
 }
+
+
 </style>
