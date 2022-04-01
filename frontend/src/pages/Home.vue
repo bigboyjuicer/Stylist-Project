@@ -17,7 +17,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'HomeView',
+  name: 'Home',
   data() {
     return {
       picture: ""
@@ -47,46 +47,35 @@ export default {
 
 .home {
   background-image: url(http://127.0.0.1:8000/media/images/Second_background.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
   height: 100vh;
-  width: 100%;
 }
 
 .blur {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
-  width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .title {
   font-family: 'Cormorant SC', serif;
-  width: 55%;
   color: black;
-  position: absolute;
-  left: 50%;
+  width: max-content;
+  position: fixed;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .stylist {
-  margin-left: 20%;
-  font-weight: 600;
   font-size: 36px;
 }
 
 .name {
-  font-weight: 700;
   font-size: 72px;
-  text-align: center;
 }
 
 .annotation {
-  font-weight: 600;
   font-size: 36px;
-  padding-left: 52%;
 }
-
 
 </style>
