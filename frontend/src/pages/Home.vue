@@ -3,9 +3,9 @@
     <router-link to="/portfolio">
       <div class="blur">
         <div class="title">
-          <div class="stylist">Стилист</div>
+<!--          <div class="stylist">Стилист</div>-->
           <div class="name">Kseniia Zi</div>
-          <div class="annotation">Тут говорят о женственности</div>
+<!--          <div class="annotation">Тут говорят о женственности</div>-->
         </div>
       </div>
     </router-link>
@@ -43,11 +43,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400&display=swap');
 
 .home {
   background-image: url(http://127.0.0.1:8000/media/images/Second_background.jpg);
-  height: 100vh;
+  background-size: cover;
+  background-position: center;
 }
 
 .blur {
@@ -57,25 +58,28 @@ export default {
 }
 
 .title {
-  font-family: 'Cormorant SC', serif;
+  display: inline-block;
+  font-family: 'Playfair Display SC', serif;
   color: black;
-  width: max-content;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: min-content;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .stylist {
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 
 .name {
-  font-size: 72px;
+  font-size: 4.5rem;
 }
 
 .annotation {
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 
 </style>

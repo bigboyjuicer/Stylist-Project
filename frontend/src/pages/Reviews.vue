@@ -18,7 +18,6 @@ export default {
 <style scoped>
 .reviews {
   background-color: #EBEBEB;
-  //background-image: url(http://127.0.0.1:8000/media/images/pexels-jo%C3%A3o-jesus-925743_1.jpg);
-  overflow: auto;
+  height: 100vh;
 }
 </style>

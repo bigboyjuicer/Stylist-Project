@@ -3,24 +3,14 @@
     <navbar page="portfolio"></navbar>
     <div class="reel">
       <div class="collection" v-for="collection in collections" v-bind:key="collection.id">
-        <img v-bind:src="collection.cover_picture" style=" max-height: 430px; width: auto; height: auto;">
-        <div class="collection__title">{{ collection.title }}</div>
+        <img v-bind:src="collection.cover_picture">
+        <div class="collection_title">{{ collection.title }}</div>
+      </div>
+      <div class="collection" v-for="collection in collections" v-bind:key="collection.id">
+        <img v-bind:src="collection.cover_picture">
+        <div class="collection_title">{{ collection.title }}</div>
       </div>
     </div>
-    <div class="bottom"></div>
-    <!--    <div class="columns is-multiline">-->
-    <!--      <div class="column is-12">-->
-    <!--        <h2 class="is-size-2 has-text-centered">Portfolio</h2>-->
-    <!--      </div>-->
-    <!--      <div class="column is-3" v-for="collection in collections" v-bind:key="collection.id">-->
-    <!--        <div style="text-align: center">-->
-    <!--          <a href="/about">-->
-    <!--            <img v-bind:src="collection.cover_picture" style=" max-height: 430px; width: auto; height: auto;">-->
-    <!--          </a>-->
-    <!--          <h3 class="is-size-5">{{ collection.title }}</h3>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -58,29 +48,54 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
 
 .portfolio {
   background-color: #EBEBEB;
-  //background-image: url(http://127.0.0.1:8000/media/images/pexels-jo%C3%A3o-jesus-925743_1.jpg);
-  overflow: auto;
+  background-size: cover;
+  height: 200vh;
 }
 
 .reel {
-  margin-top: 70px;
+  margin-block: 10vh;
+  padding-inline: 10vw;
   display: flex;
+  overflow-x: auto;
+  align-items: start;
+  gap: 16vw;
+}
+
+.reel::-webkit-scrollbar {
+  width: 1px;
+}
+
+.reel::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  border: 5px solid transparent;
+  background-clip: padding-box;
+  background-color: lightgray;
 }
 
 .collection {
-  margin: auto;
-  margin-top: 70px;
+  padding-bottom: 3vh;
   text-align: center;
 }
 
-.collection__title {
+img {
+  max-height: 430px;
+  width: auto;
+  height: auto;
+}
+
+.collection_title {
   font-family: 'Cormorant SC', serif;
   font-weight: 300;
   font-size: 25px;
+}
+
+.collection_title:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .bottom {

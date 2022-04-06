@@ -2,7 +2,8 @@
   <div class="navbar">
     <div class="title" @click="$router.push('/')">Kseniia Zi</div>
     <div class="pages">
-      <div class="page" :class="{'current-page': page==='portfolio'}" @click="$router.push('/portfolio')">Портфолио</div>
+      <div class="page" :class="{'current-page': page==='portfolio'}" @click="$router.push('/portfolio')">Портфолио
+      </div>
       <div class="page" :class="{'current-page': page==='about'}" @click="$router.push('/about')">О себе</div>
       <div class="page" :class="{'current-page': page==='services'}" @click="$router.push('/services')">Услуги</div>
       <div class="page" :class="{'current-page': page==='reviews'}" @click="$router.push('/reviews')">Отзывы</div>
@@ -20,55 +21,52 @@ export default {
 }
 </script>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;300&display=swap');
+<style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400&display=swap');
 
 .navbar {
   display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 70px;
-  backdrop-filter: blur(5px);
+  justify-content: space-between;
+  background-color: black;
+  color: whitesmoke;
   box-shadow: 0 5px 40px 1px gray;
-  padding-left: 108px;
-  padding-right: 108px;
+  padding-inline: 5vw;
 }
 
 .title {
-  font-family: 'Cormorant SC', serif;
+  font-family: 'Playfair Display SC', serif;
   font-weight: 500;
   font-size: 48px;
+  white-space: nowrap;
   cursor: pointer;
-  align-self: center;
 }
 
 .pages {
   display: flex;
+  gap: 4vw;
+  align-items: center;
+  flex-wrap: wrap;
   font-family: 'Cormorant SC', serif;
   font-weight: 300;
   font-size: 18px;
-  align-self: center;
-  margin-left: auto;
 }
 
 .page {
-  margin-inline: 21px;
-  padding: 6px 23px 6px 23px;
+  cursor: pointer;
+  padding: 0.25vh 1vw;
+  white-space: nowrap;
 }
 
-.page:hover {
-  cursor: pointer;
-  color: gray;
+.page:not(.current-page):hover{
+  text-decoration: underline;
 }
 
 .current-page{
-  border: 1px solid #000000;
-  border-radius: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
 }
 
-.current-page:hover{
-  border: 1px solid gray;
-}
 </style>
