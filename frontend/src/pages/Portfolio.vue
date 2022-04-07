@@ -1,13 +1,19 @@
 <template>
   <div class="portfolio">
-    <navbar page="portfolio"></navbar>
+    <my-navbar page="portfolio" @openDialog="loginOpen"></my-navbar>
+    <my-dialog v-model:show="loginVisible">
+      <my-login-form></my-login-form>
+    </my-dialog>
+    <my-dialog v-model:show="collectionVisible">
+      <my-collection-detail :collection="chosenCollection"></my-collection-detail>
+    </my-dialog>
     <div class="reel">
-      <div class="collection" v-for="collection in collections" v-bind:key="collection.id">
-        <img v-bind:src="collection.cover_picture">
+      <div class="collection" @click="collectionOpen(collection)" v-for="collection in collections" v-bind:key="collection.id">
+        <img :src="collection.cover_picture">
         <div class="collection_title">{{ collection.title }}</div>
       </div>
-      <div class="collection" v-for="collection in collections" v-bind:key="collection.id">
-        <img v-bind:src="collection.cover_picture">
+      <div class="collection" @click="collectionOpen(collection)" v-for="collection in collections" v-bind:key="collection.id">
+        <img :src="collection.cover_picture">
         <div class="collection_title">{{ collection.title }}</div>
       </div>
     </div>
@@ -16,18 +22,27 @@
 
 <script>
 import axios from 'axios'
-import Navbar from "@/components/Navbar";
+import MyNavbar from "@/components/MyNavbar";
+import MyDialog from "@/components/MyDialog";
+import MyLoginForm from "@/components/MyLoginForm";
+import MyCollectionDetail from "@/components/MyCollectionDetail";
 
 
 export default {
   name: 'Portfolio',
   data() {
     return {
-      collections: []
+      collections: [],
+      loginVisible: false,
+      collectionVisible: false,
+      chosenCollection: 0,
     }
   },
   components: {
-    Navbar
+    MyNavbar,
+    MyDialog,
+    MyLoginForm,
+    MyCollectionDetail,
   },
   mounted() {
     this.getPortfolio()
@@ -42,6 +57,13 @@ export default {
           .catch(error => {
             console.log(error)
           })
+    },
+    loginOpen(dialogVisible) {
+      this.loginVisible = dialogVisible
+    },
+    collectionOpen(collection) {
+      this.collectionVisible = true;
+      this.chosenCollection = collection;
     }
   }
 }
@@ -79,6 +101,7 @@ export default {
 .collection {
   padding-bottom: 3vh;
   text-align: center;
+  cursor: pointer;
 }
 
 img {

@@ -3,16 +3,18 @@ from rest_framework import serializers
 from .models import Collection, Picture, CustomUser, Service, Review, Order
 
 
-class CollectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Collection
-        fields = ('id', 'title', 'cover_picture', 'created')
-
-
 class PictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Picture
         fields = ('id', 'image', 'collection', 'created')
+
+
+class CollectionSerializer(serializers.ModelSerializer):
+    pictures = PictureSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Collection
+        fields = ('id', 'title', 'pictures', 'cover_picture', 'created')
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -6,9 +6,7 @@
 
 <script>
 
-export default {
-
-}
+export default {}
 
 
 </script>
@@ -18,8 +16,8 @@ export default {
   width: 16px;
 }
 
-::-webkit-scrollbar-track{
-  background-color: #EBEBEB;
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -55,9 +53,6 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
 }
-
-/* Make images easier to work with */
-
 
 /* Inherit fonts for inputs and buttons */
 input,

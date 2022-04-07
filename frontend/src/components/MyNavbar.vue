@@ -7,16 +7,32 @@
       <div class="page" :class="{'current-page': page==='about'}" @click="$router.push('/about')">О себе</div>
       <div class="page" :class="{'current-page': page==='services'}" @click="$router.push('/services')">Услуги</div>
       <div class="page" :class="{'current-page': page==='reviews'}" @click="$router.push('/reviews')">Отзывы</div>
-      <div class="page" :class="{'current-page': page==='auth'}" @click="$router.push('/auth')">Войти</div>
+      <div class="page" @click="isVisible">Войти</div>
     </div>
   </div>
 </template>
 
 <script>
+import Dialog from "@/components/MyDialog";
+
 export default {
   name: "Navbar",
   props: {
     page: String
+  },
+  components: {
+    Dialog
+  },
+  data() {
+    return {
+      dialogVisible: false,
+    }
+  },
+  methods: {
+    isVisible() {
+      this.dialogVisible = true
+      this.$emit('openDialog', this.dialogVisible)
+    }
   }
 }
 </script>

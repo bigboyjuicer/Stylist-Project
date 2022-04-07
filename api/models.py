@@ -72,7 +72,7 @@ class Collection(models.Model):
 
 class Picture(models.Model):
     image = models.ImageField('Изображение', upload_to='images/', help_text='Добавьте изображение в коллекцию')
-    collection = models.ForeignKey(Collection, verbose_name='Коллекция', on_delete=models.CASCADE,
+    collection = models.ForeignKey(Collection, related_name='pictures', verbose_name='Коллекция', on_delete=models.CASCADE,
                                    help_text='Выберите коллекцию, к которой принадлежит изображение')
     created = models.DateTimeField('Дата добавления изображения', auto_now_add=True)
 
