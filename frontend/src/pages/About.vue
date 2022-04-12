@@ -1,11 +1,6 @@
 <template>
   <div class="about">
-    <navbar page="about"></navbar>
-    <my-dialog v-model:show="loginVisible">
-      <my-login-form></my-login-form>
-    </my-dialog>
-
-    <div class="about_container">
+    <div class="about_container" v-if="!$store.state.loaderVisible">
       <img src="http://127.0.0.1:8000/media/images/RFRtZSHRglU.jpg">
       <div class="info">
         <div class="title">
@@ -49,9 +44,18 @@ export default {
     return {}
   },
   mounted() {
-
+    this.loading()
+    document.title = 'О себе | Kseniia Zi'
   },
-  methods: {}
+  methods: {
+    loading(){
+      this.$store.commit('changeLoaderVisible')
+
+      setTimeout(async () => {
+        this.$store.commit('changeLoaderVisible')
+      }, 500)
+    }
+  }
 }
 </script>
 
@@ -59,12 +63,14 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
 
 .about {
-  background-color: #EBEBEB;
+  background-color: white;
+  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall-2.png");
+  background-size: auto;
   height: 100vh;
 }
 
 .about_container {
-  margin-block: 10vh;
+  padding-block: 10vh;
   padding-inline: 10vw;
   display: flex;
   align-items: center;

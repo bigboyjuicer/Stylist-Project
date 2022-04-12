@@ -4,6 +4,8 @@ import Portfolio from "@/pages/Portfolio";
 import About from "@/pages/About";
 import Services from "@/pages/Services";
 import Reviews from "@/pages/Reviews";
+import Profile from "@/pages/Profile";
+import PageNotFound from "@/pages/PageNotFound";
 
 const routes = [
     {
@@ -28,6 +30,14 @@ const routes = [
         path: '/reviews',
         component: Reviews,
     },
+    {
+        path: '/profile',
+        component: Profile,
+    },
+    {
+        path: "/:catchAll(.*)",
+        component: PageNotFound
+    }
 ]
 
 const router = createRouter({

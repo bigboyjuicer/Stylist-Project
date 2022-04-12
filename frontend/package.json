@@ -7,10 +7,13 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^2.3.4",
     "axios": "^0.26.1",
     "core-js": "^3.8.3",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.3",
+    "vue-phone-number-input": "^1.1.12",
+    "vue-router": "^4.0.13",
+    "vue-ui-preloader": "^1.2.1",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

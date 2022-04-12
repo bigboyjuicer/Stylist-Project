@@ -1,19 +1,14 @@
 <template>
   <div class="portfolio">
-    <my-navbar page="portfolio" @openDialog="loginOpen"></my-navbar>
-    <my-dialog v-model:show="loginVisible">
-      <my-login-form></my-login-form>
-    </my-dialog>
     <my-dialog v-model:show="collectionVisible">
       <my-collection-detail :collection="chosenCollection"></my-collection-detail>
     </my-dialog>
     <div class="reel">
-      <div class="collection" @click="collectionOpen(collection)" v-for="collection in collections" v-bind:key="collection.id">
-        <img :src="collection.cover_picture">
-        <div class="collection_title">{{ collection.title }}</div>
-      </div>
-      <div class="collection" @click="collectionOpen(collection)" v-for="collection in collections" v-bind:key="collection.id">
-        <img :src="collection.cover_picture">
+      <div class="collection" @click="collectionOpen(collection)" v-for="collection in collections"
+           v-bind:key="collection.id">
+        <div class="frame">
+          <img :src="collection.cover_picture">
+        </div>
         <div class="collection_title">{{ collection.title }}</div>
       </div>
     </div>
@@ -33,7 +28,6 @@ export default {
   data() {
     return {
       collections: [],
-      loginVisible: false,
       collectionVisible: false,
       chosenCollection: 0,
     }
@@ -46,20 +40,27 @@ export default {
   },
   mounted() {
     this.getPortfolio()
+    document.title = 'Портфолио | Kseniia Zi'
   },
   methods: {
     getPortfolio() {
-      axios
-          .get('/api/portfolio/')
-          .then(response => {
-            this.collections = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
-    },
-    loginOpen(dialogVisible) {
-      this.loginVisible = dialogVisible
+
+      this.$store.commit('changeLoaderVisible')
+
+      axios.defaults.headers.common['Authorization'] = ''
+
+      setTimeout(async () => {
+        axios
+            .get('/api/portfolio/')
+            .then(response => {
+              this.collections = response.data
+            })
+            .catch(error => {
+              console.log(error)
+            }).finally(onFinally => {
+          this.$store.commit('changeLoaderVisible')
+        })
+      }, 500)
     },
     collectionOpen(collection) {
       this.collectionVisible = true;
@@ -72,15 +73,16 @@ export default {
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
 
+
 .portfolio {
-  background-color: #EBEBEB;
-  background-size: cover;
-  height: 200vh;
+  background-color: white;
+  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall-2.png");
+  background-size: auto;
+  height: 100vh;
 }
 
 .reel {
-  margin-block: 10vh;
-  padding-inline: 10vw;
+  padding: 10vh 10vw;
   display: flex;
   overflow-x: auto;
   align-items: start;
@@ -105,27 +107,23 @@ export default {
 }
 
 img {
-  max-height: 430px;
+  max-height: 560px;
   width: auto;
   height: auto;
+  background-color: #EBEBEB;
+  border: 15px solid black;
+  padding: 30px;
+  box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.6);
 }
 
 .collection_title {
   font-family: 'Cormorant SC', serif;
-  font-weight: 300;
+  font-weight: 900;
   font-size: 25px;
 }
 
 .collection_title:hover {
   cursor: pointer;
   text-decoration: underline;
-}
-
-.bottom {
-  border-radius: 10px 10px 0 0;
-  margin-top: 500px;
-  width: 100%;
-  height: 150px;
-  box-shadow: 0 -5px 40px 1px gray;
 }
 </style>

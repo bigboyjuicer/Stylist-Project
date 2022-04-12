@@ -1,6 +1,5 @@
 <template>
   <div class="reviews">
-    <navbar page="reviews"></navbar>
   </div>
 </template>
 
@@ -9,9 +8,10 @@ import Navbar from "@/components/MyNavbar";
 
 export default {
   name: "Reviews",
-  components: {
-    Navbar
+  mounted() {
+    document.title = 'Отзывы | Kseniia Zi'
   }
+
 }
 </script>
 

@@ -48,6 +48,12 @@ class UserAPIList(generics.ListAPIView):
     permission_classes = (IsAdminUser,)
 
 
+class UserAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
+
+
 class ServiceAPIList(generics.ListCreateAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer

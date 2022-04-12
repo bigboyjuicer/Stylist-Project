@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class CustomAccountManager(BaseUserManager):
@@ -73,7 +74,7 @@ class Collection(models.Model):
 class Picture(models.Model):
     image = models.ImageField('Изображение', upload_to='images/', help_text='Добавьте изображение в коллекцию')
     collection = models.ForeignKey(Collection, related_name='pictures', verbose_name='Коллекция', on_delete=models.CASCADE,
-                                   help_text='Выберите коллекцию, к которой принадлежит изображение')
+                                   help_text='Выберите коллекцию, к которой принадлежит изображение', null=True, blank=True)
     created = models.DateTimeField('Дата добавления изображения', auto_now_add=True)
 
     class Meta:
@@ -119,8 +120,10 @@ class Review(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(CustomUser, verbose_name='Пользователь', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='orders', verbose_name='Пользователь', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, verbose_name='Услуга', on_delete=models.CASCADE)
+    user_phonenumber = PhoneNumberField('Номер телефона', default='+79117964487')
+    comment = models.TextField(blank=True, null=True)
     is_accepted = models.BooleanField('Принят в обработку', default=False)
     is_completed = models.BooleanField('Выполнен', default=False)
     created = models.DateTimeField('Дата создания заказа', auto_now_add=True)

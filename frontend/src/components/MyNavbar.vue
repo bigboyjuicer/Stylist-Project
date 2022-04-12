@@ -1,25 +1,32 @@
 <template>
-  <div class="navbar">
-    <div class="title" @click="$router.push('/')">Kseniia Zi</div>
+  <div class="navbar" v-if="$route.path !== '/'">
+    <router-link to="/" class="title">Kseniia Zi</router-link>
     <div class="pages">
-      <div class="page" :class="{'current-page': page==='portfolio'}" @click="$router.push('/portfolio')">Портфолио
+      <router-link to="/portfolio" class="page" :class="{'current-page': $route.path==='/portfolio'}">
+        Портфолио
+      </router-link>
+      <router-link to="/about" class="page" :class="{'current-page': $route.path==='/about'}">О себе</router-link>
+      <router-link to="/services" class="page" :class="{'current-page': $route.path==='/services'}">Услуги</router-link>
+<!--      <router-link to="/reviews" class="page" :class="{'current-page': $route.path==='/reviews'}">Отзывы</router-link>-->
+      <div v-if="!$store.state.isAuthenticated" class="page" @click="this.$store.commit('changeLoginVisible')">Войти</div>
+      <div v-else class="profile-dropdown">
+        Личный аккаунт
+        <div class="dropdown-content">
+          <router-link to="/profile" class="dropdown-text">Профиль</router-link>
+          <div class="dropdown-text" @click="logOut">Выйти</div>
+        </div>
       </div>
-      <div class="page" :class="{'current-page': page==='about'}" @click="$router.push('/about')">О себе</div>
-      <div class="page" :class="{'current-page': page==='services'}" @click="$router.push('/services')">Услуги</div>
-      <div class="page" :class="{'current-page': page==='reviews'}" @click="$router.push('/reviews')">Отзывы</div>
-      <div class="page" @click="isVisible">Войти</div>
     </div>
   </div>
 </template>
 
 <script>
 import Dialog from "@/components/MyDialog";
+import axios from "axios";
+import store from "@/store";
 
 export default {
   name: "Navbar",
-  props: {
-    page: String
-  },
   components: {
     Dialog
   },
@@ -29,9 +36,12 @@ export default {
     }
   },
   methods: {
-    isVisible() {
-      this.dialogVisible = true
-      this.$emit('openDialog', this.dialogVisible)
+    logOut() {
+      axios.defaults.headers.common['Authorization'] = ""
+      localStorage.removeItem('token')
+      store.commit('removeToken')
+      store.commit('removeEmail')
+      this.$router.push('/')
     }
   }
 }
@@ -53,6 +63,8 @@ export default {
 }
 
 .title {
+  text-decoration: none;
+  color: inherit;
   font-family: 'Playfair Display SC', serif;
   font-weight: 500;
   font-size: 48px;
@@ -71,16 +83,54 @@ export default {
 }
 
 .page {
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
   padding: 0.25vh 1vw;
   white-space: nowrap;
 }
 
-.page:not(.current-page):hover{
+.profile-dropdown {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.25vh 1vw;
+  white-space: nowrap;
+}
+
+.dropdown-content {
+  display: none;
+  flex-flow: column;
+  align-items: flex-end;
+  width: 155px;
+  padding-inline: 15px;
+  padding-bottom: 15px;
+  position: absolute;
+  background-color: black;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.profile-dropdown:hover .dropdown-content {
+  display: flex;
+}
+
+.dropdown-text {
+  margin-top: 15px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-text:not(.current-page):hover {
   text-decoration: underline;
 }
 
-.current-page{
+.page:not(.current-page):hover {
+  text-decoration: underline;
+}
+
+.current-page {
   border: 1px solid #ffffff;
   border-radius: 8px;
 }

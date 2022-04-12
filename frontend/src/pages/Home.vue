@@ -26,6 +26,7 @@ export default {
   components: {},
   mounted() {
     this.getPortfolio()
+    document.title = 'Kseniia Zi'
   },
   methods: {
     getPortfolio() {
@@ -37,7 +38,7 @@ export default {
           .catch(error => {
             console.log(error)
           })
-    }
+    },
   },
 }
 </script>

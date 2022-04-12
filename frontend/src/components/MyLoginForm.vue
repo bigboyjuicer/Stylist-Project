@@ -1,18 +1,100 @@
 <template>
-  <form>
+  <form @submit.prevent="submitForm">
     <h3>Авторизация</h3>
 
-    <input type="text" placeholder="Почта" id="email">
+    <my-input
+        v-model="email"
+        type="text"
+        placeholder="Почта"
+    />
 
-    <input type="password" placeholder="Пароль" id="password">
+    <my-input
+        v-model="password"
+        type="password"
+        placeholder="Пароль"
+    />
 
-    <button>Войти</button>
+    <my-button>Войти</my-button>
+    <my-button class="registration-btn" @click="openRegistrationForm">Зарегистрироваться</my-button>
   </form>
 </template>
 
 <script>
+import axios from 'axios'
+import store from "@/store";
+import MyInput from "@/components/UI/MyInput";
+
 export default {
-  name: "MyForm"
+  name: "MyForm",
+  components: {MyInput},
+
+
+  data() {
+    return {
+      email: '',
+      password: '',
+      errors: []
+    }
+  },
+  mounted() {
+
+  },
+  methods: {
+    openRegistrationForm() {
+      this.$store.commit('changeLoginVisible')
+      this.$store.commit('changeRegistrationVisible')
+    },
+    async submitForm() {
+      axios.defaults.headers.common['Authorization'] = ""
+
+      localStorage.removeItem('token')
+
+      const formData = {
+        email: this.email,
+        password: this.password
+      }
+
+      this.email = ''
+      this.password = ''
+
+      await axios
+          .post("api/auth/token/login", formData)
+          .then(response => {
+            const token = response.data.auth_token
+
+            this.$store.commit('setToken', token)
+
+            axios.defaults.headers.common['Authorization'] = 'Token ' + token
+
+            localStorage.setItem('token', token)
+
+            axios.get("api/auth/users/me/").then(response => {
+              store.commit('setUserId', response.data.id)
+              store.commit('setEmail', response.data.email)
+            })
+
+            store.commit('changeLoginVisible')
+
+            this.$notify({
+              group: "app",
+              type: "success",
+              duration: 500,
+              title: "Вы успешно авторизировались",
+            });
+          })
+          .catch(error => {
+            if (error.response) {
+              for (const property in error.response.data) {
+                this.errors.push(`${property}: ${error.response.data[property]}`)
+              }
+            } else {
+              this.errors.push('Something went wrong. Please try again')
+
+              console.log(JSON.stringify(error))
+            }
+          })
+    }
+  }
 }
 </script>
 
@@ -21,7 +103,7 @@ export default {
 
 
 form {
-  height: 25rem;
+  height: 28rem;
   width: 25rem;
   position: absolute;
   transform: translate(-50%, -50%);
@@ -65,21 +147,13 @@ input {
   color: #e5e5e5;
 }
 
-button {
-  margin-top: 15%;
-  width: 100%;
-  background-color: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-  color: white;
-  padding: 15px 0;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
 button:hover {
+  color: black;
   background-color: rgb(239, 180, 78);
+}
+
+.registration-btn {
+  margin-top: 5%;
 }
 </style>
