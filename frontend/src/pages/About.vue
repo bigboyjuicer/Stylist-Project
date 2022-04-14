@@ -64,8 +64,6 @@ export default {
 
 .about {
   background-color: white;
-  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall-2.png");
-  background-size: auto;
   height: 100vh;
 }
 

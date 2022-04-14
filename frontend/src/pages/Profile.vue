@@ -20,6 +20,9 @@
             <div class="arrow-down"></div>
           </div>
         </div>
+        <div class="delete-profile">
+          <my-button class="delete-btn" @click="deleteProfile">Удалить профиль</my-button>
+        </div>
       </div>
       <!--      <table>
               <thead>
@@ -49,6 +52,9 @@
     <my-dialog v-model:show="$store.state.changeNameVisible">
       <my-name-form :name="user.first_name"></my-name-form>
     </my-dialog>
+    <my-dialog v-model:show="$store.state.deleteProfileVisible">
+      <my-delete-profile-form></my-delete-profile-form>
+    </my-dialog>
   </div>
 </template>
 
@@ -56,12 +62,14 @@
 import axios from "axios";
 import MyDialog from "@/components/MyDialog";
 import MyNameForm from "@/components/MyNameForm";
+import MyDeleteProfileForm from "@/components/MyDeleteProfileForm";
 
 export default {
   name: "Profile",
   components: {
     MyDialog,
-    MyNameForm
+    MyNameForm,
+    MyDeleteProfileForm
   },
 
   data() {
@@ -81,6 +89,9 @@ export default {
     },
     changeName() {
       this.$store.commit('changeNameVisible')
+    },
+    deleteProfile() {
+      this.$store.commit('changeDeleteProfileVisible')
     },
     getOrders() {
       this.$store.commit('changeLoaderVisible')
@@ -117,8 +128,7 @@ export default {
 
 .profile {
   background-color: white;
-  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall-2.png");
-  background-size: auto;
+
   height: 100vh;
   padding-block: 10vh;
   padding-inline: 10vw;
@@ -187,6 +197,19 @@ img {
   padding: 3px;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+.delete-profile {
+  margin-top: 4rem;
+  max-width: max-content;
+}
+
+.delete-btn {
+  padding: 0.5rem;
+  font-family: 'Cormorant SC', serif;
+  font-size: 16px;
+  margin-top: 0;
+  background-color: red;
 }
 
 table {

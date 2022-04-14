@@ -8,7 +8,7 @@
     <my-dialog v-model:show="$store.state.registrationVisible">
       <my-registration-form></my-registration-form>
     </my-dialog>
-    <notifications group="app" position="bottom center" width="20%" classes="my-notification"/>
+    <notifications group="app" position="bottom center" width="25%" classes="my-notification"/>
     <loader class="loader" object="black" size="10" speed="1" bg="#ffffff" opacity="0" name="dots"
             v-if="$store.state.loaderVisible"></loader>
     <div class="bottom-info-bar" v-if="$route.path !== '/'">
@@ -118,11 +118,10 @@ select {
 }
 
 .my-notification {
-  margin: 0 2rem 2rem 2rem;
+  margin-bottom: 2rem;
   padding: 10px;
   font-size: 12px;
   color: #ffffff;
-  border-radius: 10px;
 
   .notification-title {
     font-family: 'Cormorant SC', serif;

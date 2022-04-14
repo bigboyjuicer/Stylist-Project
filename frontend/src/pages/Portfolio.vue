@@ -76,8 +76,6 @@ export default {
 
 .portfolio {
   background-color: white;
-  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall-2.png");
-  background-size: auto;
   height: 100vh;
 }
 
@@ -106,19 +104,26 @@ export default {
   cursor: pointer;
 }
 
-img {
-  max-height: 560px;
-  width: auto;
-  height: auto;
-  background-color: #EBEBEB;
-  border: 15px solid black;
-  padding: 30px;
-  box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.6);
+.frame{
+  overflow: hidden;
+  height: 560px;
+  width: 381px;
+}
+
+.frame img {
+  width: 100%;
+  height: 100%;
+  transition: transform 1s ease;
+}
+
+.frame img:focus,
+.frame img:hover{
+  transform: scale(1.3);
 }
 
 .collection_title {
   font-family: 'Cormorant SC', serif;
-  font-weight: 900;
+  font-weight: 400;
   font-size: 25px;
 }
 

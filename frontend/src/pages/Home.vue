@@ -13,7 +13,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
 
 export default {
@@ -50,6 +49,7 @@ export default {
   background-image: url(http://127.0.0.1:8000/media/images/Second_background.jpg);
   background-size: cover;
   background-position: center;
+  cursor: zoom-in;
 }
 
 .blur {

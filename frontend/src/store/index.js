@@ -11,6 +11,7 @@ export default createStore({
     changeNameVisible: false,
     loaderVisible: false,
     orderVisible: false,
+    deleteProfileVisible: false,
   },
   getters: {
   },
@@ -49,6 +50,9 @@ export default createStore({
     },
     changeOrderVisible(state){
       state.orderVisible = !state.orderVisible
+    },
+    changeDeleteProfileVisible(state){
+      state.deleteProfileVisible = !state.deleteProfileVisible
     }
   },
   actions: {

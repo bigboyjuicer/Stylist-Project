@@ -6,7 +6,7 @@
         <div class="service" v-for="service in services" v-bind:key="service.id">
           <div class="service-title">{{ service.title }}</div>
           <div class="service-description">{{ service.description }}</div>
-          <div class="checkout-button" @click="makeOrder(service.id, service.title)">Оформить услугу</div>
+          <div class="checkout-button" @click="makeOrder(service.id, service.title)">Сделать заказ</div>
         </div>
       </div>
     </div>
@@ -14,7 +14,6 @@
   <my-dialog v-model:show="$store.state.orderVisible">
     <my-order-form :service="chosen_service" :title="service_title"></my-order-form>
   </my-dialog>
-  <notifications group="app" position="bottom right" width="20%" classes="my-notification"/>
 </template>
 
 <script>
@@ -63,7 +62,6 @@ export default {
           this.$store.commit('changeLoaderVisible')
         })
       }, 500)
-
     }
   }
 }
@@ -73,9 +71,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
 
 .services {
-  background-color: white;
-  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall-2.png");
-  background-size: auto;
+  background-color: #EBEBEB;
   height: 250vh;
 }
 
@@ -106,10 +102,10 @@ export default {
   flex-flow: column;
   height: max-content;
   width: max-content;
-  background: white;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 15px;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 .service-title {

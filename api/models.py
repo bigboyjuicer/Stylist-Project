@@ -122,7 +122,7 @@ class Review(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, related_name='orders', verbose_name='Пользователь', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, verbose_name='Услуга', on_delete=models.CASCADE)
-    user_phonenumber = PhoneNumberField('Номер телефона', default='+79117964487')
+    user_phonenumber = PhoneNumberField('Номер телефона')
     comment = models.TextField(blank=True, null=True)
     is_accepted = models.BooleanField('Принят в обработку', default=False)
     is_completed = models.BooleanField('Выполнен', default=False)
