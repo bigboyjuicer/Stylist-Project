@@ -11,8 +11,6 @@
     <notifications group="app" position="bottom center" width="25%" classes="my-notification"/>
     <loader class="loader" object="black" size="10" speed="1" bg="#ffffff" opacity="0" name="dots"
             v-if="$store.state.loaderVisible"></loader>
-    <div class="bottom-info-bar" v-if="$route.path !== '/'">
-    </div>
   </div>
 </template>
 

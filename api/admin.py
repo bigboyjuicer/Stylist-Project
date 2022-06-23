@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Collection, Picture, CustomUser, Service, Review, Order
+from .models import Collection, Picture, CustomUser, Service, Review, Order, Chat, Message
 
 
 class CollectionAdmin(admin.ModelAdmin):
@@ -47,3 +47,5 @@ admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(Chat)
+admin.site.register(Message)

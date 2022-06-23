@@ -12,6 +12,8 @@ export default createStore({
     loaderVisible: false,
     orderVisible: false,
     deleteProfileVisible: false,
+    makeReviewVisible: false,
+    declineVisible: false,
   },
   getters: {
   },
@@ -53,6 +55,12 @@ export default createStore({
     },
     changeDeleteProfileVisible(state){
       state.deleteProfileVisible = !state.deleteProfileVisible
+    },
+    changeMakeReviewVisible(state) {
+      state.makeReviewVisible = !state.makeReviewVisible
+    },
+    changeDeclineVisible(state) {
+      state.declineVisible = !state.declineVisible
     }
   },
   actions: {

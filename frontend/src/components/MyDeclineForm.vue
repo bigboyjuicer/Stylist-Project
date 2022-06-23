@@ -1,13 +1,11 @@
 <template>
-  <form @submit.prevent="saveName">
-    <h3>Изменить имя</h3>
-    <my-input
-        v-model="name"
-        type="text"
-        placeholder="Имя"
-    />
-    <my-button class="save-btn">Сохранить</my-button>
-  </form>
+  <div class="delete-form">
+    <h3>Вы точно хотите отменить заказ?</h3>
+    <div class="buttons">
+      <my-button class="yes-btn" @click="declineOrder">Отменить</my-button>
+      <my-button class="no-btn" @click="$store.commit('changeDeclineVisible')">Не отменять</my-button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -15,36 +13,27 @@ import axios from "axios";
 import store from "@/store";
 
 export default {
-  name: "MyNameForm",
+  name: "MyDeclineForm",
+  components: {},
   props: {
-    name: {
-      type: String,
-    },
-    chat: {
+    orderId: {
       type: Number,
+      default: -1,
     }
   },
   methods: {
-    saveName() {
-      const formData = {
-        email: this.$store.state.email,
-        first_name: this.name,
-        chat: this.chat
-      }
-
-      axios.put(`api/users/${this.$store.state.user_id}`, formData).then(response => {
-        store.commit('changeNameVisible')
-
+    declineOrder() {
+      axios.delete(`api/order/${this.orderId}`).then(response => {
+        this.$store.commit('changeDeclineVisible')
         this.$notify({
           group: "app",
           type: "success",
           duration: 500,
-          title: "Имя успешно изменено",
+          title: "Заказ был удален",
         });
-
         this.$router.go()
       }).catch(error => {
-        store.commit('changeNameVisible')
+        this.$store.commit('changeDeclineVisible')
 
         this.$notify({
           group: "app",
@@ -60,9 +49,9 @@ export default {
 </script>
 
 <style scoped>
-form {
-  height: 19rem;
-  width: 25rem;
+.delete-form {
+  height: 18rem;
+  width: 30rem;
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -74,7 +63,7 @@ form {
   padding: 50px 35px;
 }
 
-form * {
+.delete-form * {
   font-family: 'Cormorant SC', serif;
   color: #ffffff;
   letter-spacing: 0.5px;
@@ -82,11 +71,20 @@ form * {
   border: none;
 }
 
-form h3 {
+.delete-form h3 {
   font-size: 32px;
   font-weight: 500;
   line-height: 42px;
   text-align: center;
+}
+
+.input-title {
+  margin-top: 1rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 2rem;
 }
 
 ::placeholder {
@@ -94,12 +92,22 @@ form h3 {
   vertical-align: center;
 }
 
-button:hover {
+.yes-btn {
+  margin-top: 2rem;
+}
+
+.no-btn {
+  margin-top: 2rem;
+}
+
+.yes-btn:hover {
+  color: white;
+  background-color: red;
+}
+
+.no-btn:hover {
   color: black;
   background-color: rgb(239, 180, 78);
 }
 
-.save-btn {
-  margin-top: 5%;
-}
 </style>

@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
@@ -73,8 +74,10 @@ class Collection(models.Model):
 
 class Picture(models.Model):
     image = models.ImageField('Изображение', upload_to='images/', help_text='Добавьте изображение в коллекцию')
-    collection = models.ForeignKey(Collection, related_name='pictures', verbose_name='Коллекция', on_delete=models.CASCADE,
-                                   help_text='Выберите коллекцию, к которой принадлежит изображение', null=True, blank=True)
+    collection = models.ForeignKey(Collection, related_name='pictures', verbose_name='Коллекция',
+                                   on_delete=models.CASCADE,
+                                   help_text='Выберите коллекцию, к которой принадлежит изображение', null=True,
+                                   blank=True)
     created = models.DateTimeField('Дата добавления изображения', auto_now_add=True)
 
     class Meta:
@@ -107,7 +110,7 @@ class Service(models.Model):
 
 class Review(models.Model):
     content = models.TextField('Содержимое отзыва', help_text='Введите содержимое отзыва')
-    user = models.ForeignKey(CustomUser, verbose_name='Пользователь', on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, verbose_name='Пользователь', on_delete=models.CASCADE)
     created = models.DateTimeField('Дата создания отзыва', auto_now_add=True)
 
     class Meta:
@@ -146,6 +149,17 @@ class Order(models.Model):
 
     def __str__(self):
         return f'Заказ услуги "{self.service.title} от пользователя {self.user.first_name} ({self.user.email})"'
+
+
+class Chat(models.Model):
+    user = models.OneToOneField(CustomUser, related_name="chat", verbose_name="Пользователь", on_delete=models.CASCADE)
+
+
+class Message(models.Model):
+    text = models.TextField()
+    date = models.DateTimeField(default=datetime.now, blank=True)
+    user = models.ForeignKey(CustomUser, verbose_name="Пользователь", on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat, related_name="messages", verbose_name="Чат", on_delete=models.CASCADE)
 
 
 @receiver(models.signals.post_delete, sender=Collection)

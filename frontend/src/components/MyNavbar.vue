@@ -7,7 +7,7 @@
       </router-link>
       <router-link to="/about" class="page" :class="{'current-page': $route.path==='/about'}">О себе</router-link>
       <router-link to="/services" class="page" :class="{'current-page': $route.path==='/services'}">Услуги</router-link>
-<!--      <router-link to="/reviews" class="page" :class="{'current-page': $route.path==='/reviews'}">Отзывы</router-link>-->
+      <router-link to="/reviews" class="page" :class="{'current-page': $route.path==='/reviews'}">Отзывы</router-link>
       <div v-if="!$store.state.isAuthenticated" class="page" @click="this.$store.commit('changeLoginVisible')">Войти</div>
       <div v-else class="profile-dropdown">
         Личный аккаунт
